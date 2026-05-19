@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@NoArgsConstructor // <--- Esto es lo que te falta
+@NoArgsConstructor
 @AllArgsConstructor
 @Data @Builder
 public class UserResponseDto {

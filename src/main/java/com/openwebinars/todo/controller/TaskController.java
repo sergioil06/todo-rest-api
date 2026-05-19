@@ -52,7 +52,7 @@ public class TaskController {
         List<GetTaskDto> tasks = taskService.findByAuthor(author)
                 .stream()
                 .filter(t -> priority == null || t.getPriority() == priority)
-                .map(GetTaskDto::of) // Usando tu método .of() nativo
+                .map(GetTaskDto::of)
                 .toList();
         
         return ResponseEntity.ok(tasks);
@@ -97,8 +97,6 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
     
-    // --- NUEVO ENDPOINT DE BÚSQUEDA AVANZADA (Exigido por el PDF) ---
-
     @Operation(summary = "Buscar mis tareas que tengan ciertas etiquetas")
     @GetMapping("/search/by-tags")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
@@ -106,14 +104,10 @@ public class TaskController {
             @RequestParam List<Long> tagIds,
             @AuthenticationPrincipal User userLogueado
     ) {
-        // 1. Traemos las entidades filtradas desde el servicio de forma segura
         List<Task> tasks = taskService.buscarTareasPorEtiquetas(tagIds, userLogueado);
-        
-        // 2. Mapeamos de forma limpia usando tu GetTaskDto::of que no da fallos de inferencia
         List<GetTaskDto> dtoList = tasks.stream()
                 .map(GetTaskDto::of)
                 .toList();
-
         return ResponseEntity.ok(dtoList);
     }
     

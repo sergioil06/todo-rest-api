@@ -31,18 +31,16 @@ public class TagService {
                 .orElseThrow(() -> new TagNotFoundException(id));
     }
 
-    // Modificado: Se añade control de negocio para que el nombre no vaya en blanco
     public Tag save(TagRequest dto) {
         if (dto.name() == null || dto.name().trim().isEmpty()) {
             throw new BusinessRuleException("El nombre de la etiqueta no puede estar vacío.");
         }
 
         Tag newTag = new Tag();
-        newTag.setName(dto.name().trim()); // Extraemos el String usando dto.name()
+        newTag.setName(dto.name().trim());
         return tagRepository.save(newTag);
     }
 
-    // Modificado: Ahora lanza TagNotFoundException e incluye control de nombre vacío
     public Tag edit(Long id, TagRequest dto) {
         if (dto.name() == null || dto.name().trim().isEmpty()) {
             throw new BusinessRuleException("El nombre de la etiqueta no puede estar vacío.");
@@ -50,13 +48,12 @@ public class TagService {
 
         return tagRepository.findById(id)
                 .map(tag -> {
-                    tag.setName(dto.name().trim()); // Actualizamos el nombre con el DTO
+                    tag.setName(dto.name().trim());
                     return tagRepository.save(tag);
                 })
                 .orElseThrow(() -> new TagNotFoundException(id));
     }
 
-    // Modificado: Controla la existencia con la excepción 404 adecuada
     public void delete(Long id) {
         if (!tagRepository.existsById(id)) {
             throw new TagNotFoundException(id);

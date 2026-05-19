@@ -34,7 +34,6 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public Task findById(Long id) {
-        // Cambiado RuntimeException por tu TaskNotFoundException
         return taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
     }
@@ -45,16 +44,14 @@ public class TaskService {
     }
 
     public Task save(EditTaskCommand cmd, User author) {
-        // AJUSTE: Validación de fecha límite no pasada
         if (cmd.deadline() != null && cmd.deadline().isBefore(LocalDateTime.now())) {
             throw new BusinessRuleException("No puedes crear una tarea con una fecha límite del pasado.");
         }
 
         Category category = null;
         if (cmd.categoryId() != null) {
-            // Cambiado RuntimeException por CategoryNotFoundException
             category = categoryRepository.findById(cmd.categoryId())
-                    .orElseThrow(() -> new CategoryNotFoundException(cmd.categoryId())); 
+                    .orElseThrow(() -> new CategoryNotFoundException(cmd.categoryId()));
         }
 
         Task newTask = Task.builder()
@@ -98,8 +95,6 @@ public class TaskService {
 
     public void delete(Long id, User userLogueado) throws AccessDeniedException {
         Task task = findById(id);
-        
-        // AJUSTE: Cambiado RuntimeException por AccessDeniedException (HTTP 403)
         if (!task.getAuthor().getId().equals(userLogueado.getId())) {
             throw new AccessDeniedException("No tienes permiso para borrar esta tarea.");
         }
@@ -117,11 +112,8 @@ public class TaskService {
             throw new AccessDeniedException("No tienes permiso sobre esta tarea.");
         }
         
-        // Cambiado RuntimeException por TagNotFoundException
         Tag tag = tagRepository.findById(tagId)
                 .orElseThrow(() -> new TagNotFoundException(tagId));
-        
-        // AJUSTE: Regra de negocio para evitar duplicar la misma etiqueta en la tarea
         if (task.getTags().contains(tag)) {
             throw new BusinessRuleException("Esta tarea ya tiene asignada la etiqueta: " + tag.getName());
         }
@@ -141,11 +133,8 @@ public class TaskService {
             throw new AccessDeniedException("No tienes permiso sobre esta tarea.");
         }
         
-        // Cambiado RuntimeException por TagNotFoundException
         Tag tag = tagRepository.findById(tagId)
                 .orElseThrow(() -> new TagNotFoundException(tagId));
-        
-        // AJUSTE: Regla de negocio para validar si la tarea de verdad tenía ese tag asignado antes de borrar
         if (!task.getTags().contains(tag)) {
             throw new BusinessRuleException("No se puede remover: la tarea no cuenta con la etiqueta '" + tag.getName() + "'.");
         }

@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
-//Ajustado a la ruta protegida de tu SecurityConfig
 @SecurityRequirement(name = "basicAuth")
 @RequestMapping("/category") 
 @Tag(name = "Categorías", description = "Controlador para la gestión de categorías de tareas")
@@ -51,7 +50,7 @@ public class CategoryController {
  @PostMapping
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GESTOR')") 
  @Operation(summary = "Crear una nueva categoría", description = "Recibe un CategoryRequest sin ID. Acceso restringido a ADMIN y GESTOR.")
- public ResponseEntity<CategoryDTO> create(@RequestBody CategoryRequest categoryRequest) { // <-- Cambiado a CategoryRequest
+ public ResponseEntity<CategoryDTO> create(@RequestBody CategoryRequest categoryRequest) {
      CategoryDTO created = categoryService.createCategory(categoryRequest);
      return new ResponseEntity<>(created, HttpStatus.CREATED);
  }
@@ -61,7 +60,7 @@ public class CategoryController {
  @Operation(summary = "Actualizar una categoría existente", description = "Recibe las modificaciones en un CategoryRequest. Acceso restringido a ADMIN y GESTOR.")
  public ResponseEntity<CategoryDTO> update(
          @Parameter(description = "ID de la categoría a modificar") @PathVariable Long id,
-         @RequestBody CategoryRequest categoryRequest) { // <-- Cambiado a CategoryRequest
+         @RequestBody CategoryRequest categoryRequest) {
      return ResponseEntity.ok(categoryService.updateCategory(id, categoryRequest));
  }
 

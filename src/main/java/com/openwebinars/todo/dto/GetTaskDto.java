@@ -14,7 +14,7 @@ public record GetTaskDto(
         String title,
         String description,
         boolean completed,
-        TaskPriority priority, // Cambiado de String a TaskPriority
+        TaskPriority priority,
         LocalDateTime createdAt,
         LocalDateTime deadline,
         NewUserResponse author,
@@ -27,14 +27,14 @@ public record GetTaskDto(
                 t.getTitle(),
                 t.getDescription(),
                 t.isCompleted(),
-                t.getPriority(), // Ya es TaskPriority en la entidad
+                t.getPriority(),
                 t.getCreatedAt(),
                 t.getDeadline(),
                 t.getAuthor() != null ? NewUserResponse.of(t.getAuthor()) : null,
                 t.getCategory() != null ? t.getCategory().getTitle() : "Sin categoría",
                 t.getTags() != null ? 
                     t.getTags().stream()
-                        .map(Tag::getName) // Usamos referencia a método más limpia
+                        .map(Tag::getName)
                         .collect(Collectors.toSet()) : 
                     Set.of()
         );

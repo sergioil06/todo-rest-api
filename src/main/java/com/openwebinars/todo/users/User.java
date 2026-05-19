@@ -31,7 +31,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "user_entity")
-//... anotaciones existentes ...
 public class User implements UserDetails {
 
  @Id
@@ -40,26 +39,21 @@ public class User implements UserDetails {
 
  @Column(unique = true, nullable = false)
  private String username;
- 
- private String password; // Esta se guardará encriptada con BCrypt
- 
+
+ private String password;
+
  private String email;
- private String fullname; // [cite: 21]
+ private String fullname;
 
  @Enumerated(EnumType.STRING)
- private UserRole role; // Los valores: ADMIN, GESTOR, USER [cite: 105]
+ private UserRole role;
 
  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
  private List<Task> tasks;
 
- // --- SEGURIDAD ---
-
  @Override
  public Collection<? extends GrantedAuthority> getAuthorities() {
-     // Solo una autoridad basada en el Rol del proyecto [cite: 105]
      return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
  }
 
- // El resto de métodos de UserDetails (isAccountNonExpired, etc.) 
- // están perfectos devolviendo true como los tienes.
 }

@@ -17,5 +17,5 @@ public class ApiError {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime timestamp;
     
-    private List<String> subErrors; // Para pintar qué campos fallaron en las validaciones (@Valid)
+    private List<String> subErrors;
 }

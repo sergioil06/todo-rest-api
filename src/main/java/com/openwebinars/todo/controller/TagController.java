@@ -52,7 +52,7 @@ public class TagController {
 
     @Operation(summary = "Crear una nueva etiqueta")
     @PostMapping
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')") // Cambiado a hasAnyRole para mantener consistencia
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     public ResponseEntity<TagResponse> create(@Valid @RequestBody TagRequest request) {
         Tag tag = tagService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(TagResponse.of(tag));
@@ -77,17 +77,14 @@ public class TagController {
         return ResponseEntity.noContent().build();
     }
 
-    // --- MÉTODOS DE RELACIÓN CON TAREAS (Cumplen requisitos del PDF) ---
-
     @Operation(summary = "Asignar una etiqueta a una tarea")
     @PutMapping("/assign/{taskId}/{tagId}")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')") // Valida rol inicial (USER o ADMIN)
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<GetTaskDto> addTag(
-            @PathVariable Long taskId, 
-            @PathVariable Long tagId, 
-            @AuthenticationPrincipal User userLogueado // Inyecta el usuario de forma Stateless
+            @PathVariable Long taskId,
+            @PathVariable Long tagId,
+            @AuthenticationPrincipal User userLogueado
     ) throws AccessDeniedException {
-        // Ejecutamos la lógica segura delegada en el servicio que valida mediante .getAuthor()
         Task updatedTask = taskService.addTagToTask(taskId, tagId, userLogueado);
         return ResponseEntity.ok(GetTaskDto.of(updatedTask));
     }
@@ -96,11 +93,10 @@ public class TagController {
     @DeleteMapping("/remove/{taskId}/{tagId}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<GetTaskDto> removeTag(
-            @PathVariable Long taskId, 
-            @PathVariable Long tagId, 
+            @PathVariable Long taskId,
+            @PathVariable Long tagId,
             @AuthenticationPrincipal User userLogueado
     ) throws AccessDeniedException {
-        // Ejecutamos la lógica segura delegada en el servicio que valida mediante .getAuthor()
         Task updatedTask = taskService.removeTagFromTask(taskId, tagId, userLogueado);
         return ResponseEntity.ok(GetTaskDto.of(updatedTask));
     }

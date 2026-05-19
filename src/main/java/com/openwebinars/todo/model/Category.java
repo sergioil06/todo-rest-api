@@ -35,7 +35,6 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String title;
 
-    // Relación 1 a 0..* con Task según el UML del proyecto
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @JsonIgnore
