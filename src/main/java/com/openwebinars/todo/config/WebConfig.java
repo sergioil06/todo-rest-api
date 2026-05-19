@@ -19,8 +19,9 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Permitir CORS en todos los endpoints de la API
                         .allowedOrigins(
-                            "http://localhost:5500",  // Origen típico de Live Server (VS Code)
-                            "http://127.0.0.1:5500"   // Alternativa IP del Live Server
+                            "http://localhost:5500",
+                            "http://127.0.0.1:5500",
+                            "https://sergioil06.github.io"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
                         .allowedHeaders("*") // Permitir todas las cabeceras (¡Crucial para Authorization Basic!)
