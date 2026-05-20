@@ -215,7 +215,7 @@ El frontend es completamente estático (HTML + CSS + JS), por lo que se desplieg
 
 1. Subir los ficheros del frontend a un repositorio de GitHub.
 2. Activar GitHub Pages en la configuración del repositorio (rama `main`, carpeta raíz).
-3. El sitio queda accesible en `https://sergioil06.github.io/<nombre-repositorio>`.
+3. El sitio queda accesible en `https://sergioil06.github.io/front-intermodular/`.
 
 La URL del backend en Render está configurada en el fichero `js/config.js` del frontend.
 
@@ -313,7 +313,7 @@ La documentación Swagger en `http://localhost:8080/swagger-ui.html`.
 
 | Recurso | URL |
 |---------|-----|
-| Aplicación web (frontend) | https://sergioil06.github.io/front-tfg |
+| Aplicación web (frontend) | https://sergioil06.github.io/front-intermodular/ |
 | API REST (backend) | https://todo-rest-api-0n1m.onrender.com |
 | Swagger / OpenAPI | https://todo-rest-api-0n1m.onrender.com/swagger-ui.html |
 | Imagen en Docker Hub | https://hub.docker.com/r/sergioil13/gestor-tareas-api |
