@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.openwebinars.todo.dto.EditProfileCommand;
+import com.openwebinars.todo.dto.EditProfileDto;
 import com.openwebinars.todo.error.UserNotFoundException;
 import com.openwebinars.todo.model.UserRole;
 
@@ -87,7 +87,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User actualizarPerfil(EditProfileCommand cmd, User userLogueado) {
+    public User actualizarPerfil(EditProfileDto cmd, User userLogueado) {
         User user = userRepository.findById(userLogueado.getId())
                 .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado con ID: " + userLogueado.getId()));
         if (cmd.getEmail() != null && !cmd.getEmail().isBlank()) {

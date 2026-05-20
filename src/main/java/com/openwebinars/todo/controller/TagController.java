@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openwebinars.todo.dto.TagRequest;
-import com.openwebinars.todo.dto.TagResponse;
+import com.openwebinars.todo.dto.TagRequestDto;
+import com.openwebinars.todo.dto.TagResponseDto;
 import com.openwebinars.todo.dto.GetTaskDto;
 import com.openwebinars.todo.model.Tag;
 import com.openwebinars.todo.model.Task;
@@ -42,10 +42,10 @@ public class TagController {
 
     @Operation(summary = "Listar todas las etiquetas")
     @GetMapping
-    public ResponseEntity<List<TagResponse>> getAll() {
-        List<TagResponse> tags = tagService.findAll()
+    public ResponseEntity<List<TagResponseDto>> getAll() {
+        List<TagResponseDto> tags = tagService.findAll()
                 .stream()
-                .map(TagResponse::of)
+                .map(TagResponseDto::of)
                 .toList();
         return ResponseEntity.ok(tags);
     }
@@ -53,20 +53,20 @@ public class TagController {
     @Operation(summary = "Crear una nueva etiqueta")
     @PostMapping
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
-    public ResponseEntity<TagResponse> create(@Valid @RequestBody TagRequest request) {
+    public ResponseEntity<TagResponseDto> create(@Valid @RequestBody TagRequestDto request) {
         Tag tag = tagService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(TagResponse.of(tag));
+        return ResponseEntity.status(HttpStatus.CREATED).body(TagResponseDto.of(tag));
     }
 
     @Operation(summary = "Actualizar una etiqueta")
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')") 
-    public ResponseEntity<TagResponse> update(
+    public ResponseEntity<TagResponseDto> update(
             @PathVariable Long id, 
-            @Valid @RequestBody TagRequest request
+            @Valid @RequestBody TagRequestDto request
     ) {
         Tag updatedTag = tagService.edit(id, request);
-        return ResponseEntity.ok(TagResponse.of(updatedTag));
+        return ResponseEntity.ok(TagResponseDto.of(updatedTag));
     }
 
     @Operation(summary = "Eliminar una etiqueta")

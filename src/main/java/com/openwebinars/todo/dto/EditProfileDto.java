@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EditProfileCommand {
+public class EditProfileDto {
 	@Email(message = "El formato del correo no es válido")
     @NotBlank(message = "El email no puede estar vacío")
     private String email;

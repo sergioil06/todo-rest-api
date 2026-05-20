@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import com.openwebinars.todo.model.Tag;
 import com.openwebinars.todo.model.Task;
 import com.openwebinars.todo.model.TaskPriority;
-import com.openwebinars.todo.users.NewUserResponse;
+import com.openwebinars.todo.users.NewUserResponseDto;
 
 public record GetTaskDto(
         Long id,
@@ -17,7 +17,7 @@ public record GetTaskDto(
         TaskPriority priority,
         LocalDateTime createdAt,
         LocalDateTime deadline,
-        NewUserResponse author,
+        NewUserResponseDto author,
         String categoryName,
         Set<String> tags
 ) {
@@ -30,7 +30,7 @@ public record GetTaskDto(
                 t.getPriority(),
                 t.getCreatedAt(),
                 t.getDeadline(),
-                t.getAuthor() != null ? NewUserResponse.of(t.getAuthor()) : null,
+                t.getAuthor() != null ? NewUserResponseDto.of(t.getAuthor()) : null,
                 t.getCategory() != null ? t.getCategory().getTitle() : "Sin categoría",
                 t.getTags() != null ? 
                     t.getTags().stream()

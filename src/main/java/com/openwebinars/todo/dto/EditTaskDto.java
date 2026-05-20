@@ -4,7 +4,7 @@ import com.openwebinars.todo.model.TaskPriority;
 
 import java.time.LocalDateTime;
 
-public record EditTaskCommand(
+public record EditTaskDto(
     String title,
     String description,
     LocalDateTime deadline,

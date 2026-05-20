@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.openwebinars.todo.dto.TagRequest;
+import com.openwebinars.todo.dto.TagRequestDto;
 import com.openwebinars.todo.error.BusinessRuleException;
 import com.openwebinars.todo.error.TagNotFoundException;
 import com.openwebinars.todo.model.Tag;
@@ -31,7 +31,7 @@ public class TagService {
                 .orElseThrow(() -> new TagNotFoundException(id));
     }
 
-    public Tag save(TagRequest dto) {
+    public Tag save(TagRequestDto dto) {
         if (dto.name() == null || dto.name().trim().isEmpty()) {
             throw new BusinessRuleException("El nombre de la etiqueta no puede estar vacío.");
         }
@@ -41,7 +41,7 @@ public class TagService {
         return tagRepository.save(newTag);
     }
 
-    public Tag edit(Long id, TagRequest dto) {
+    public Tag edit(Long id, TagRequestDto dto) {
         if (dto.name() == null || dto.name().trim().isEmpty()) {
             throw new BusinessRuleException("El nombre de la etiqueta no puede estar vacío.");
         }

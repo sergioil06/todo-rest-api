@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Schema(description = "Modelo para registrar una nueva categoría")
-public class CategoryRequest {
+public class CategoryRequestDto {
 
     @Schema(description = "Título único de la categoría", example = "Trabajo", requiredMode = Schema.RequiredMode.REQUIRED)
     private String title;

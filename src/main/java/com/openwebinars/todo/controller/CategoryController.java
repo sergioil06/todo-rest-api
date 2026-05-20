@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openwebinars.todo.dto.CategoryDTO;
-import com.openwebinars.todo.dto.CategoryRequest;
+import com.openwebinars.todo.dto.CategoryDto;
+import com.openwebinars.todo.dto.CategoryRequestDto;
 import com.openwebinars.todo.service.CategoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,31 +36,31 @@ public class CategoryController {
 
  @GetMapping
  @Operation(summary = "Listar todas las categorías", description = "Permite a cualquier usuario autenticado ver la lista de categorías.")
- public ResponseEntity<List<CategoryDTO>> getAll() {
+ public ResponseEntity<List<CategoryDto>> getAll() {
      return ResponseEntity.ok(categoryService.getAllCategories());
  }
 
  @GetMapping("/{id}")
  @Operation(summary = "Obtener una categoría por ID")
- public ResponseEntity<CategoryDTO> getById(
+ public ResponseEntity<CategoryDto> getById(
          @Parameter(description = "ID de la categoría a buscar") @PathVariable Long id) {
      return ResponseEntity.ok(categoryService.getCategoryById(id));
  }
 
  @PostMapping
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GESTOR')") 
- @Operation(summary = "Crear una nueva categoría", description = "Recibe un CategoryRequest sin ID. Acceso restringido a ADMIN y GESTOR.")
- public ResponseEntity<CategoryDTO> create(@RequestBody CategoryRequest categoryRequest) {
-     CategoryDTO created = categoryService.createCategory(categoryRequest);
+ @Operation(summary = "Crear una nueva categoría", description = "Recibe un CategoryRequestDto sin ID. Acceso restringido a ADMIN y GESTOR.")
+ public ResponseEntity<CategoryDto> create(@RequestBody CategoryRequestDto categoryRequest) {
+     CategoryDto created = categoryService.createCategory(categoryRequest);
      return new ResponseEntity<>(created, HttpStatus.CREATED);
  }
 
  @PutMapping("/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GESTOR')")
- @Operation(summary = "Actualizar una categoría existente", description = "Recibe las modificaciones en un CategoryRequest. Acceso restringido a ADMIN y GESTOR.")
- public ResponseEntity<CategoryDTO> update(
+ @Operation(summary = "Actualizar una categoría existente", description = "Recibe las modificaciones en un CategoryRequestDto. Acceso restringido a ADMIN y GESTOR.")
+ public ResponseEntity<CategoryDto> update(
          @Parameter(description = "ID de la categoría a modificar") @PathVariable Long id,
-         @RequestBody CategoryRequest categoryRequest) {
+         @RequestBody CategoryRequestDto categoryRequest) {
      return ResponseEntity.ok(categoryService.updateCategory(id, categoryRequest));
  }
 

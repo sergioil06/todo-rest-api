@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openwebinars.todo.dto.EditTaskCommand;
+import com.openwebinars.todo.dto.EditTaskDto;
 import com.openwebinars.todo.dto.GetTaskDto;
 import com.openwebinars.todo.dto.TaskDashboardDto;
 import com.openwebinars.todo.model.Task;
@@ -68,7 +68,7 @@ public class TaskController {
     @Operation(summary = "Crear una nueva tarea")
     @PostMapping
     public ResponseEntity<GetTaskDto> create(
-            @RequestBody EditTaskCommand cmd,
+            @RequestBody EditTaskDto cmd,
             @AuthenticationPrincipal User author
     ) {
         Task task = taskService.save(cmd, author);
@@ -78,7 +78,7 @@ public class TaskController {
     @Operation(summary = "Editar una tarea existente")
     @PutMapping("/{id}")
     public ResponseEntity<GetTaskDto> edit(
-            @RequestBody EditTaskCommand cmd,
+            @RequestBody EditTaskDto cmd,
             @PathVariable Long id,
             @AuthenticationPrincipal User userLogueado
     ) throws AccessDeniedException {

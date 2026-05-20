@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.openwebinars.todo.dto.EditTaskCommand;
+import com.openwebinars.todo.dto.EditTaskDto;
 import com.openwebinars.todo.dto.TaskDashboardDto;
 import com.openwebinars.todo.error.BusinessRuleException;
 import com.openwebinars.todo.error.CategoryNotFoundException;
@@ -43,7 +43,7 @@ public class TaskService {
         return taskRepository.findByAuthor(author);
     }
 
-    public Task save(EditTaskCommand cmd, User author) {
+    public Task save(EditTaskDto cmd, User author) {
         if (cmd.deadline() != null && cmd.deadline().isBefore(LocalDateTime.now())) {
             throw new BusinessRuleException("No puedes crear una tarea con una fecha límite del pasado.");
         }
@@ -68,7 +68,7 @@ public class TaskService {
         return taskRepository.save(newTask);
     }
 
-    public Task edit(EditTaskCommand cmd, Long id, User userLogueado) throws AccessDeniedException {
+    public Task edit(EditTaskDto cmd, Long id, User userLogueado) throws AccessDeniedException {
         Task task = findById(id);
 
         if (!task.getAuthor().getId().equals(userLogueado.getId())) {

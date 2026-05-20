@@ -1,12 +1,12 @@
 package com.openwebinars.todo.users;
 
-public record NewUserResponse(
+public record NewUserResponseDto(
         Long id,
         String username,
         String email
 ) {
-    public static NewUserResponse of(User user) {
-        return new NewUserResponse(
+    public static NewUserResponseDto of(User user) {
+        return new NewUserResponseDto(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail()

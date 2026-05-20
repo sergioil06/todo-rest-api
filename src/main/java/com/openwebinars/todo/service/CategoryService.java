@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.openwebinars.todo.dto.CategoryDTO;
-import com.openwebinars.todo.dto.CategoryRequest;
+import com.openwebinars.todo.dto.CategoryDto;
+import com.openwebinars.todo.dto.CategoryRequestDto;
 import com.openwebinars.todo.error.BusinessRuleException;
 import com.openwebinars.todo.error.CategoryNotFoundException;
 import com.openwebinars.todo.model.Category;
@@ -23,21 +23,21 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> getAllCategories() {
+    public List<CategoryDto> getAllCategories() {
         return categoryRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public CategoryDTO getCategoryById(Long id) {
+    public CategoryDto getCategoryById(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id));
         return convertToDTO(category);
     }
 
     @Transactional
-    public CategoryDTO createCategory(CategoryRequest categoryRequest) {
+    public CategoryDto createCategory(CategoryRequestDto categoryRequest) {
         if (categoryRequest.getTitle() == null || categoryRequest.getTitle().trim().isEmpty()) {
             throw new BusinessRuleException("El título de la categoría no puede estar vacío.");
         }
@@ -51,7 +51,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDTO updateCategory(Long id, CategoryRequest categoryRequest) {
+    public CategoryDto updateCategory(Long id, CategoryRequestDto categoryRequest) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id));
         
@@ -72,8 +72,8 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    private CategoryDTO convertToDTO(Category category) {
-        CategoryDTO dto = new CategoryDTO();
+    private CategoryDto convertToDTO(Category category) {
+        CategoryDto dto = new CategoryDto();
         dto.setId(category.getId());
         dto.setTitle(category.getTitle());
         return dto;

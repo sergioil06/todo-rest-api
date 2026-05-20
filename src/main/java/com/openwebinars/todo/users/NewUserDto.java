@@ -1,6 +1,6 @@
 package com.openwebinars.todo.users;
 
-public record NewUserCommand(
+public record NewUserDto(
         String username,
         String email,
         String password

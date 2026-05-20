@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openwebinars.todo.dto.EditProfileCommand;
+import com.openwebinars.todo.dto.EditProfileDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class UserController {
     @PutMapping("/profile")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN', 'GESTOR')")
     public ResponseEntity<UserResponseDto> updateProfile(
-            @RequestBody EditProfileCommand cmd,
+            @RequestBody EditProfileDto cmd,
             @AuthenticationPrincipal User userLogueado
     ) {
         User updatedUser = userService.actualizarPerfil(cmd, userLogueado);

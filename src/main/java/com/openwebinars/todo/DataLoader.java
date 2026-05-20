@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.openwebinars.todo.dto.TagRequest;
+import com.openwebinars.todo.dto.TagRequestDto;
 import com.openwebinars.todo.model.Category;
 import com.openwebinars.todo.model.Tag;
 import com.openwebinars.todo.model.Task;
@@ -55,8 +55,8 @@ public class DataLoader implements CommandLineRunner {
             cat1.setTasks(new ArrayList<>());
             categoryRepository.save(cat1);
 
-            Tag tagUrgente = tagService.save(new TagRequest("Urgente"));
-            Tag tagTrabajo = tagService.save(new TagRequest("Personal"));
+            Tag tagUrgente = tagService.save(new TagRequestDto("Urgente"));
+            Tag tagTrabajo = tagService.save(new TagRequestDto("Personal"));
 
             Task t1 = Task.builder()
                     .title("Proyecto Final")
